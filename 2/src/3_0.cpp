@@ -3,7 +3,7 @@ module;
 module student_1bib21083.Lab2.Variant17.Task3;
 
 namespace RBPO::Lab2::Variant17::Task3{
-    double f2(double x){
-            return x>=1.1 ? 9-x : std::sin(3*x)/(std::pow(x,4)+1);
+    double a(double i){
+        return std::pow(-1,i) * (i+1) / (std::pow(i,3)+1);
     }
 }

@@ -1,9 +1,10 @@
-module student_1bib21083.Lab2.Variant17.Task3;
+module student_1bib21083.Lab2.Variant17.Task4;
 
-using namespace RBPO::Lab2::Variant17::Task3;
-double a(double);
+import :a;
 
-namespace RBPO::Lab2::Variant17::Task3{
+using namespace RBPO::Lab2::Variant17::Task4;
+
+namespace RBPO::Lab2::Variant17::Task4{
     double f4(double e){
         double sum = 0;
         int i = 0;
