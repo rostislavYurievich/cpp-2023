@@ -51,13 +51,13 @@ INCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
 LIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
 
 # define the C source files
-SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
+SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS))) $(wildcard $(patsubst %,%/*.ixx, $(SOURCEDIRS)))
 
 # define the C object files
 OBJECTS		:= $(SOURCES:.cpp=.o)
 
 # define the dependency output files
-DEPS		:= $(OBJECTS:.o=.d)
+#DEPS		:= $(OBJECTS:.o=.d)
 
 #
 # The following part of the makefile is generic; it can be used to
@@ -77,7 +77,7 @@ $(MAIN): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS)
 
 # include all .d files
--include $(DEPS)
+#-include $(DEPS)
 
 # this is a suffix replacement rule for building .o's and .d's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
@@ -85,13 +85,13 @@ $(MAIN): $(OBJECTS)
 # -MMD generates dependency output files same name as the .o file
 # (see the gnu make manual section about automatic variables)
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -MMD $<  -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
 
 .PHONY: clean
 clean:
 	$(RM) $(OUTPUTMAIN)
-	$(RM) $(call FIXPATH,$(OBJECTS))
-	$(RM) $(call FIXPATH,$(DEPS))
+	$(RM) $(OBJECTS)
+#	$(RM) $(DEPS)
 	@echo Cleanup complete!
 
 run: all

@@ -1,5 +1,8 @@
 **/.vscode
 **/.clangs
 **/a.out
-**/.o
-**/.d
+**/*.o
+**/*.d
+**/gcm.cache
+**/output
+
