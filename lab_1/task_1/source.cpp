@@ -54,7 +54,7 @@ std::string salary;
 void WritePersonData(const std::string &name, const unsigned short *age, const std::string &height="", const std::string &weight=""){
     std::cout<<"\nИмя: "<<name<<" Возраст: "<<*age<<"\nРост: "<<height<<" Вес: "<<weight<<" З/П: "<<salary<<std::endl;
 }
-
+#ifndef DO_NOT_DEFINE_MAIN
 int main(int argc, char *argv[])
 {
     std::string name;
@@ -65,4 +65,4 @@ int main(int argc, char *argv[])
     salary = std::to_string(fSalary);
     WritePersonData(name, &age, std::to_string(height),std::to_string(weight));
 }
-
+#endif
