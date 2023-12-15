@@ -8,6 +8,7 @@ class Complex{
     private: double m_mod;
              double m_arg;
 
+    public:
     Complex(double m_re, double m_im){
         this->m_arg = std::atan2(m_im,m_re);
         this->m_mod = std::sqrt(m_re*m_re+m_im*m_im);
@@ -118,6 +119,7 @@ class Complex{
         this->m_mod = std::sqrt(m_re*m_re+m_im*m_im);
 		return *this;
 	}
+
 	friend Complex operator+(Complex lhs, Complex rhs);
 	friend Complex operator-(Complex lhs, Complex rhs);
 	friend Complex operator*(Complex lhs, Complex rhs);
@@ -214,24 +216,24 @@ class Rational{
         return Rational(-Nominator(), Denominator());
         }
 	Rational& operator++ () {
-        this->m_nominator + 1;
+        this->m_nominator += 1;
         this->GCDSimplify(); 
         return *this;
         }
 	Rational operator++ (int) {
         Rational t(*this);
-        this->m_nominator + 1;
+        this->m_nominator += 1;
         this->GCDSimplify();
         return t;
         }
 	Rational& operator-- () {
-        this->m_nominator - 1;
+        this->m_nominator -= 1;
         this->GCDSimplify(); 
         return *this;
         }
 	Rational operator-- (int) {
         Rational t(*this);
-        this->m_nominator - 1;
+        this->m_nominator -= 1;
         this->GCDSimplify();
         return t;
     }
@@ -315,7 +317,46 @@ bool operator== (Rational lhs, Rational rhs)
 		return true;
 	return false;
 }
+
+bool operator< (Rational lhs, Rational rhs)
+{
+	return (double)lhs<(double)rhs;
+}
+
 std::ostream& operator<< (std::ostream& os, const Rational& rational)
 {
 	return os << rational.m_nominator << "/" << rational.m_denominator;
+}
+
+Complex operator+(int lhs, Complex rhs)
+{
+    double re = lhs + rhs.Re();
+    double im = rhs.Im();
+    return Complex( re ,im);
+}
+
+Complex cos(Complex x){
+    return Complex(std::cos(x.Re())*cosh(x.Im()), -sin(x.Re())*sinh(x.Im()));
+}
+
+Complex f(const Complex &z){
+    Complex a = 1+0i;
+    return a*z*z-cos(2*z);
+}
+
+Rational cos(Rational x){
+    return std::cos((double)x);
+}
+
+Rational f(const Rational &r){
+    Rational a=1/1;
+    return a*r*r-cos(2*r);
+}
+
+double f(double x){
+    double a = 1.0;
+    return a*x*x-std::cos(2*x);
+}
+
+
 }
