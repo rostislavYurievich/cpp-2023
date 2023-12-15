@@ -214,7 +214,7 @@ class Rational{
     int Nominator(){ return m_nominator;}
     int Denominator(){ return m_denominator;}
 
-    operator double(){
+    explicit operator double(){
         return (double)Nominator()/Denominator();
     }
 
@@ -284,6 +284,10 @@ class Rational{
 	friend Rational operator* (Rational lhs, Rational rhs);
 	friend Rational operator/ (Rational lhs, Rational rhs);
 	friend bool operator== (Rational lhs, Rational rhs);
+    friend bool operator<(Rational lhs, Rational rhs);
+	friend bool operator>(Rational lhs, Rational rhs);
+	friend bool operator<=(Rational lhs, Rational rhs);
+	friend bool operator<=(Rational lhs, Rational rhs);
 	friend std::ostream& operator<< (std::ostream& os, const Rational& rational);
 };
 
@@ -324,10 +328,23 @@ bool operator== (Rational lhs, Rational rhs)
 	return false;
 }
 
-bool operator<=> (Rational lhs, Rational rhs)
+bool operator< (Rational lhs, Rational rhs)
 {
-	return (double)lhs <=> (double)rhs;
+	return (double)lhs < (double)rhs;
 }
+bool operator> (Rational lhs, Rational rhs)
+{
+	return (double)lhs > (double)rhs;
+}
+bool operator>= (Rational lhs, Rational rhs)
+{
+	return (double)lhs >= (double)rhs;
+}
+bool operator<= (Rational lhs, Rational rhs)
+{
+	return (double)lhs <= (double)rhs;
+}
+
 
 std::ostream& operator<< (std::ostream& os, const Rational& rational)
 {
