@@ -156,8 +156,10 @@ Complex operator""i(long double Im){return Complex(0, Im);}
 Complex operator""i(unsigned long long Im) { return Complex(0, Im); }
 std::ostream& operator<< (std::ostream& os, Complex complex)
 {
-    if (complex.Im() > 0) { return os << complex.Re() << "+" << complex.Im() << "i"; }
-    else { return os << complex.Re() << complex.Im() << "i"; }
+    if (complex.Im() >= 0) {
+        return os << complex.Re() << "+" << complex.Im() << "i";
+    }
+    return os << complex.Re() << complex.Im() << "i";
 }
 
 int FindGreatestCommonDivisor(int a, int b)
@@ -191,10 +193,10 @@ class Rational{
     }
 
     Rational(int m_nominator, int m_denominator){
-        int GCD = FindGreatestCommonDivisor(m_nominator, m_denominator);
-        this->m_denominator = m_denominator/GCD;
-        this->m_nominator = m_nominator/GCD;
-    }
+        this->m_nominator = m_nominator;
+        this->m_denominator = m_denominator;
+        }
+    
 
     Rational(int m_nominator){
         Rational(m_nominator,1);
@@ -203,6 +205,10 @@ class Rational{
         int GCD = FindGreatestCommonDivisor(m_nominator, m_denominator);
         this->m_denominator = m_denominator/GCD;
         this->m_nominator = m_nominator/GCD;
+        if(m_denominator<0){
+            m_denominator = -m_denominator;
+            m_nominator = -m_nominator;
+        }
     }
 
     int Nominator(){ return m_nominator;}
@@ -216,24 +222,24 @@ class Rational{
         return Rational(-Nominator(), Denominator());
         }
 	Rational& operator++ () {
-        this->m_nominator += 1;
+        this->m_nominator += m_denominator;
         this->GCDSimplify(); 
         return *this;
         }
 	Rational operator++ (int) {
         Rational t(*this);
-        this->m_nominator += 1;
+        this->m_nominator += m_denominator;
         this->GCDSimplify();
         return t;
         }
 	Rational& operator-- () {
-        this->m_nominator -= 1;
+        this->m_nominator -= m_denominator;
         this->GCDSimplify(); 
         return *this;
         }
 	Rational operator-- (int) {
         Rational t(*this);
-        this->m_nominator -= 1;
+        this->m_nominator -= m_denominator;
         this->GCDSimplify();
         return t;
     }
@@ -318,9 +324,9 @@ bool operator== (Rational lhs, Rational rhs)
 	return false;
 }
 
-bool operator< (Rational lhs, Rational rhs)
+bool operator<=> (Rational lhs, Rational rhs)
 {
-	return (double)lhs<(double)rhs;
+	return (double)lhs <=> (double)rhs;
 }
 
 std::ostream& operator<< (std::ostream& os, const Rational& rational)
