@@ -3,7 +3,7 @@
 #include <ostream>
 export module Math;
 
-namespace Math{
+export namespace Math{
 class Complex{
     private: double m_mod;
              double m_arg;
